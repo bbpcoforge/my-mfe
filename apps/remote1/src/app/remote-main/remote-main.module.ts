@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HomeComponent } from '../home/home.component';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { KendoGridComponent } from '@my-mfe/shared-ui';
+import { KendoGridComponent } from '@shell/shared-ui';
 
 export const routes: Routes = [
   {

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { KendoGridComponent } from '@my-mfe/shared-ui';
+import { KendoGridComponent } from '@shell/shared-ui';
 
 @Component({
   standalone: true,

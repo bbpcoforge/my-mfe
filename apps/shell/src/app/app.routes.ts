@@ -19,6 +19,6 @@ export const appRoutes: Route[] = [
   {
     path: 'products',
     loadComponent: () =>
-      import('@my-mfe/shared-ui').then((m) => m.KendoGridComponent),
+      import('@shell/shared-ui').then((m) => m.KendoGridComponent),
   },
 ];

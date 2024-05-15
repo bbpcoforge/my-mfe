@@ -15,13 +15,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome my-mfe'
+      'Welcome shell'
     );
   });
 
-  it(`should have as title 'my-mfe'`, () => {
+  it(`should have as title 'shell'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('my-mfe');
+    expect(app.title).toEqual('shell');
   });
 });

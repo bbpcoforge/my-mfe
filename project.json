@@ -1,4 +1,4 @@
 {
-  "name": "@my-mfe/source",
+  "name": "@shell/source",
   "$schema": "node_modules/nx/schemas/project-schema.json"
 }
