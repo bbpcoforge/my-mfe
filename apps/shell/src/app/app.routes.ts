@@ -1,7 +1,8 @@
 import { Route } from '@angular/router';
 import { loadRemoteModule } from '@angular-architects/native-federation';
-//import { NxWelcomeComponent } from './nx-welcome.component';
+import { OktaCallbackComponent } from '@okta/okta-angular';
 import { HomeComponent } from './home/home.component';
+import { ProfileComponent } from './profile/profile.component';
 
 export const appRoutes: Route[] = [
   {
@@ -21,4 +22,6 @@ export const appRoutes: Route[] = [
     loadComponent: () =>
       import('@shell/shared-ui').then((m) => m.KendoGridComponent),
   },
+  { path: 'login/callback', component: OktaCallbackComponent },
+  { path: 'profile', component: ProfileComponent },
 ];

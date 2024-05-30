@@ -1,23 +1,33 @@
+nav {
+  background-color: #333;
+  display: flex;
+  justify-content: space-between;
+}
+
 ul {
-  list-style-type: none;
+  list-style: none;
   margin: 0;
   padding: 0;
-  overflow: hidden;
-  background-color: #333;
 }
 
-li {
-  float: left;
+.nav-left,
+.nav-right {
+  display: flex;
 }
 
-li a {
+a,
+button {
   display: block;
   color: white;
   text-align: center;
   padding: 14px 16px;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
 }
 
-li a:hover {
+a:hover,
+button:hover {
   background-color: #111;
 }
