@@ -1,8 +1,8 @@
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
 import { OktaAuthStateService } from '@okta/okta-angular';
-import { filter, map, Observable } from 'rxjs';
 import { AuthState } from '@okta/okta-auth-js';
+import { Observable, filter, map } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -13,11 +13,10 @@ import { AuthState } from '@okta/okta-auth-js';
 })
 export class ProfileComponent implements OnInit {
   public name$!: Observable<string>;
-
-  constructor(private _oktaAuthStateService: OktaAuthStateService) {}
+  private oktaAuthStateService = inject(OktaAuthStateService);
 
   public ngOnInit(): void {
-    this.name$ = this._oktaAuthStateService.authState$.pipe(
+    this.name$ = this.oktaAuthStateService.authState$.pipe(
       filter(
         (authState: AuthState) => !!authState && !!authState.isAuthenticated
       ),

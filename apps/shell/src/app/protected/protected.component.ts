@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-protected',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.css',
+  templateUrl: './protected.component.html',
+  styleUrl: './protected.component.css',
 })
-export class HomeComponent {}
+export class ProtectedComponent {}

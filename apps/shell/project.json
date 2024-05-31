@@ -54,7 +54,11 @@
         "browser": "apps/shell/src/main.ts",
         "polyfills": ["zone.js", "es-module-shims"],
         "tsConfig": "apps/shell/tsconfig.app.json",
-        "assets": ["apps/shell/src/favicon.ico", "apps/shell/src/assets"],
+        "assets": [
+          "apps/shell/src/favicon.ico",
+          "apps/shell/src/assets",
+          "apps/shell/src/api"
+        ],
         "styles": [
           {
             "input": "node_modules/@progress/kendo-theme-default/dist/all.css"

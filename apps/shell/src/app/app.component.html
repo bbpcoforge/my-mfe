@@ -4,18 +4,15 @@
     <li><a routerLink="/remote">Remote application</a></li>
   </ul>
   <ul class="nav-right">
-    <li *ngIf="isAuthenticated$ | async">
-      <a routerLink="/profile">Profile</a>
-    </li>
-    <li>
-      <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
-        <button (click)="signIn()">Sign in</button>
-      </ng-container>
+    <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
+      <li><button (click)="signIn()">Sign in</button></li>
+    </ng-container>
 
-      <ng-template #signout>
-        <button (click)="signOut()">Sign out</button>
-      </ng-template>
-    </li>
+    <ng-template #signout>
+      <li><a routerLink="/profile">Profile</a></li>
+      <li><a routerLink="/protected">Protected</a></li>
+      <li><button (click)="signOut()">Sign out</button></li>
+    </ng-template>
   </ul>
 </nav>
 
