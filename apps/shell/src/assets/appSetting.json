@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Home",
+    "description": "This is shell app",
+    "iconFlag": "k-i-home",
+    "selected": true,
+    "path": "",
+    "layout": "KendoAppbarComponent",
+    "component": "HomeComponent"
+  },
+  {
+    "title": "Remote application",
+    "description": "Remote app with native fedration",
+    "path": "remote",
+    "layout": "KendoDrawerComponent",
+    "remote": {
+      "name": "remote1",
+      "exposes": "./remote1Module",
+      "remoteModule": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-inherited"
+  },
+  {
+    "title": "Profile",
+    "iconFlag": "k-i-user",
+    "path": "profile",
+    "layout": "KendoAppbarComponent",
+    "component": "ProfileComponent",
+    "protected": true
+  },
+  {
+    "title": "Protected",
+    "path": "protected",
+    "iconFlag": "k-i-lock",
+    "layout": "KendoAppbarComponent",
+    "module": {
+      "path": "./protected/routes",
+      "module": "PROTECTED_FEATURE_ROUTES"
+    },
+    "protected": true
+  }
+]

@@ -31,6 +31,8 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'protected',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m['KendoAppbarComponent']),
     loadChildren: () =>
       import('./protected/routes').then((m) => m.PROTECTED_FEATURE_ROUTES),
     canActivate: [OktaAuthGuard],
