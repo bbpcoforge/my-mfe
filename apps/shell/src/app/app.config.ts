@@ -3,6 +3,8 @@ import {
   ApplicationConfig,
   importProvidersFrom,
 } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
@@ -40,7 +42,11 @@ function configInitializer(
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    importProvidersFrom(OktaAuthModule),
+    importProvidersFrom([
+      OktaAuthModule,
+      BrowserModule,
+      BrowserAnimationsModule,
+    ]),
     provideRouter(appRoutes, withEnabledBlockingInitialNavigation()),
     provideHttpClient(withInterceptors([authInterceptor])),
     {

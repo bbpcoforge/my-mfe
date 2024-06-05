@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
-import { AuthState } from '@okta/okta-auth-js';
-import { Observable, filter, map } from 'rxjs';
+//import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
+//import { AuthState } from '@okta/okta-auth-js';
+//import { Observable, filter, map } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -12,8 +12,12 @@ import { Observable, filter, map } from 'rxjs';
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   title = 'shell';
+}
+/*export class AppComponent implements OnInit {
+  title = 'shell';
+  
   public isAuthenticated$!: Observable<boolean>;
   private oktaStateService = inject(OktaAuthStateService);
   private oktaAuth = inject(OKTA_AUTH);
@@ -32,4 +36,5 @@ export class AppComponent implements OnInit {
   public async signOut(): Promise<void> {
     await this.oktaAuth.signOut();
   }
-}
+  
+}*/

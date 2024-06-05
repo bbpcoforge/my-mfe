@@ -1,19 +1,1 @@
-<nav>
-  <ul class="nav-left">
-    <li><a routerLink="/">Home</a></li>
-    <li><a routerLink="/remote">Remote application</a></li>
-  </ul>
-  <ul class="nav-right">
-    <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
-      <li><button (click)="signIn()">Sign in</button></li>
-    </ng-container>
-
-    <ng-template #signout>
-      <li><a routerLink="/profile">Profile</a></li>
-      <li><a routerLink="/protected">Protected</a></li>
-      <li><button (click)="signOut()">Sign out</button></li>
-    </ng-template>
-  </ul>
-</nav>
-
 <router-outlet></router-outlet>

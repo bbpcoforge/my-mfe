@@ -1,0 +1,71 @@
+lib-kendo-drawer {
+  padding: 0;
+}
+kendo-drawer-content {
+  padding: 20px;
+}
+kendo-drawer-container {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+}
+.k-drawer-item {
+  align-items: center;
+  color: #656565;
+}
+.k-drawer-item .item-icon {
+  height: 25px;
+}
+.custom-toolbar {
+  width: 100%;
+  background-color: #f6f6f6;
+  line-height: 10px;
+  border-bottom: inset;
+  border-bottom-width: 1px;
+  padding: 8px;
+  color: #656565;
+  display: flex;
+  justify-content: space-between;
+}
+.nav-left,
+.nav-right {
+  display: flex;
+}
+ul {
+  list-style: none;
+  margin: 0px 5px 0px 0px;
+  padding: 0;
+}
+a,
+button {
+  display: block;
+  color: #656565;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.custom-toolbar .k-button-solid-primary {
+  margin-top: 4px;
+}
+.container-router {
+  display: contents;
+}
+.item-descr {
+  margin-top: -5px;
+}
+.item-descr-wrap > span {
+  font-size: 70%;
+}
+.item-descr-wrap {
+  display: flex;
+  flex-direction: column;
+}
+.flag {
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-color: transparent;
+}

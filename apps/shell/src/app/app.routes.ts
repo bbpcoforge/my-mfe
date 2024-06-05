@@ -8,24 +8,25 @@ import { ProfileComponent } from './profile/profile.component';
 export const appRoutes: Route[] = [
   {
     path: '',
-    component: HomeComponent,
     pathMatch: 'full',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m['KendoAppbarComponent']),
+    children: [{ path: '', component: HomeComponent }],
   },
   {
     path: 'remote',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m['KendoDrawerComponent']),
     loadChildren: () =>
       loadRemoteModule('remote1', './remote1Module').then(
         (m) => m.RemoteMainModule
       ),
   },
   {
-    path: 'products',
-    loadComponent: () =>
-      import('@shell/shared-ui').then((m) => m.KendoGridComponent),
-  },
-  {
     path: 'profile',
-    component: ProfileComponent,
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m['KendoAppbarComponent']),
+    children: [{ path: '', component: ProfileComponent }],
     canActivate: [OktaAuthGuard],
   },
   {
@@ -35,4 +36,19 @@ export const appRoutes: Route[] = [
     canActivate: [OktaAuthGuard],
   },
   { path: 'login/callback', component: OktaCallbackComponent },
+  /*{
+    path: 'products',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m.KendoGridComponent),
+  },
+  {
+    path: 'drawer',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m.KendoDrawerComponent),
+  },
+  {
+    path: 'appbar',
+    loadComponent: () =>
+      import('@shell/shared-ui').then((m) => m.KendoAppbarComponent),
+  },*/
 ];

@@ -1,0 +1,81 @@
+<!--Load the font icons package:-->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@progress/kendo-font-icons/dist/index.css"
+/>
+
+<div class="custom-toolbar">
+  <div class="nav-left">
+    <button
+      kendoButton
+      [svgIcon]="menuSvg"
+      fillMode="flat"
+      (click)="drawer.toggle()"
+    ></button>
+    <span
+      style="
+        margin-left: 20px;
+        margin-top: 14px;
+        font-weight: bold;
+        font-size: 17px;
+      "
+      >Weather Forecast in Europe</span
+    >
+  </div>
+  <ul class="nav-right">
+    <ng-container *ngIf="(isAuthenticated$ | async) === false; else signout">
+      <li>
+        <button
+          kendoButton
+          themeColor="primary"
+          [svgIcon]="userIcon"
+          (click)="signIn()"
+        >
+          Sign in
+        </button>
+      </li>
+    </ng-container>
+
+    <ng-template #signout>
+      <li><a routerLink="/profile">Profile</a></li>
+      <li><a routerLink="/protected">Protected</a></li>
+      <li>
+        <button
+          kendoButton
+          themeColor="primary"
+          [svgIcon]="userIcon"
+          (click)="signOut()"
+        >
+          Sign out
+        </button>
+      </li>
+    </ng-template>
+  </ul>
+</div>
+<kendo-drawer-container>
+  <kendo-drawer
+    #drawer
+    [items]="items"
+    mode="push"
+    [mini]="true"
+    [width]="200"
+    [(expanded)]="expanded"
+    (select)="onSelect($event)"
+  >
+    <ng-template kendoDrawerItemTemplate let-item>
+      <span routerLink="{{ item.path }}" class="container-router">
+        <span
+          class="k-icon k-font-icon item-icon flag {{ item.iconFlag }}"
+        ></span>
+        <div class="item-descr-wrap" *ngIf="expanded">
+          <div>{{ item.title }}</div>
+          <span class="item-descr">{{ item.description }}</span>
+        </div>
+      </span>
+    </ng-template>
+  </kendo-drawer>
+
+  <kendo-drawer-content #container>
+    <router-outlet></router-outlet>
+  </kendo-drawer-content>
+</kendo-drawer-container>
