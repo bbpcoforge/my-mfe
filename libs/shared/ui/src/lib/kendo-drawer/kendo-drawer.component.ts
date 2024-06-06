@@ -10,6 +10,8 @@ import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 import { AuthState } from '@okta/okta-auth-js';
 import { Observable, filter, map } from 'rxjs';
 
+import { AppconfigService } from '../appconfig.service';
+
 @Component({
   selector: 'lib-kendo-drawer',
   standalone: true,
@@ -40,8 +42,9 @@ export class KendoDrawerComponent implements OnInit {
     iconFlag: 'k-i-inherited',
     selected: true,
   };
-
-  public items = [
+  public pretectedRoutes: { [Key: string]: unknown }[] = [];
+  public items = [];
+  /*public items = [
     {
       path: '/',
       title: 'Home',
@@ -56,12 +59,27 @@ export class KendoDrawerComponent implements OnInit {
       iconFlag: 'k-i-inherited', //k-i-aggregate-fields
       selected: true,
     },
-  ];
+  ];*/
+
+  constructor(private appconfigService: AppconfigService) {}
+
   public ngOnInit(): void {
     this.isAuthenticated$ = this.oktaStateService.authState$.pipe(
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
+    this.appconfigService.loadData().subscribe((data) => {
+      this.items = data.filter(
+        (item: { [Key: string]: unknown }) => !item['protected']
+      );
+      this.pretectedRoutes = data.filter(
+        (item: { [Key: string]: unknown }) => item['protected']
+      );
+      this.selected =
+        data.filter(
+          (item: { [Key: string]: unknown }) => item['selecte'] === true
+        )[0] || data[0];
+    });
   }
 
   public async signIn(): Promise<void> {

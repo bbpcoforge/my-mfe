@@ -27,6 +27,7 @@ import {
   SVGIcon,
   userIcon,
 } from '@progress/kendo-svg-icons';
+import { AppconfigService } from '../appconfig.service';
 
 @Component({
   selector: 'lib-kendo-appbar',
@@ -61,12 +62,18 @@ export class KendoAppbarComponent implements AfterViewInit, OnInit {
   //public anchor: ElementRef<HTMLElement>;
   public margin = { horizontal: -46, vertical: 7 };
   public show = false;
+  public publicRoutes: { [Key: string]: unknown }[] = [];
+  public pretectedRoutes: { [Key: string]: unknown }[] = [];
 
   public onToggle(): void {
     this.show = !this.show;
   }
 
-  constructor(private zone: NgZone, private anchor: ElementRef<HTMLElement>) {}
+  constructor(
+    private zone: NgZone,
+    private anchor: ElementRef<HTMLElement>,
+    private appconfigService: AppconfigService
+  ) {}
 
   public ngAfterViewInit(): void {
     this.zone.runOutsideAngular(() => {
@@ -82,6 +89,14 @@ export class KendoAppbarComponent implements AfterViewInit, OnInit {
       filter((s: AuthState) => !!s),
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
+    this.appconfigService.loadData().subscribe((data) => {
+      this.publicRoutes = data.filter(
+        (item: { [Key: string]: unknown }) => !item['protected']
+      );
+      this.pretectedRoutes = data.filter(
+        (item: { [Key: string]: unknown }) => item['protected']
+      );
+    });
   }
 
   public async signIn(): Promise<void> {

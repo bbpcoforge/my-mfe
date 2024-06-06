@@ -37,8 +37,9 @@
     </ng-container>
 
     <ng-template #signout>
-      <li><a routerLink="/profile">Profile</a></li>
-      <li><a routerLink="/protected">Protected</a></li>
+      <li *ngFor="let item of pretectedRoutes" style="margin-top: 5px">
+        <a routerLink="/{{ item['path'] }}">{{ item['title'] }}</a>
+      </li>
       <li>
         <button
           kendoButton
@@ -63,7 +64,7 @@
     (select)="onSelect($event)"
   >
     <ng-template kendoDrawerItemTemplate let-item>
-      <span routerLink="{{ item.path }}" class="container-router">
+      <span routerLink="/{{ item.path }}" class="container-router">
         <span
           class="k-icon k-font-icon item-icon flag {{ item.iconFlag }}"
         ></span>
