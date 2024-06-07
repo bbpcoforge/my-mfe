@@ -1,6 +1,6 @@
 import { Component, ViewEncapsulation, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet, ActivatedRoute } from '@angular/router';
 import { DrawerSelectEvent } from '@progress/kendo-angular-layout';
 import { SVGIcon, menuIcon, userIcon } from '@progress/kendo-svg-icons';
 import { LayoutModule } from '@progress/kendo-angular-layout';
@@ -61,7 +61,10 @@ export class KendoDrawerComponent implements OnInit {
     },
   ];*/
 
-  constructor(private appconfigService: AppconfigService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private appconfigService: AppconfigService
+  ) {}
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this.oktaStateService.authState$.pipe(
@@ -69,15 +72,21 @@ export class KendoDrawerComponent implements OnInit {
       map((s: AuthState) => s.isAuthenticated ?? false)
     );
     this.appconfigService.loadData().subscribe((data) => {
-      this.items = data.filter(
+      const publicRoutes = data.filter(
         (item: { [Key: string]: unknown }) => !item['protected']
       );
+      this.items = publicRoutes.filter((item: { [Key: string]: unknown }) => {
+        if (item['path'] === this.route.snapshot.url[0].path)
+          item['selected'] = true;
+        return item;
+      });
       this.pretectedRoutes = data.filter(
         (item: { [Key: string]: unknown }) => item['protected']
       );
       this.selected =
         data.filter(
-          (item: { [Key: string]: unknown }) => item['selecte'] === true
+          (item: { [Key: string]: unknown }) =>
+            item['path'] === this.route.snapshot.url[0].path
         )[0] || data[0];
     });
   }

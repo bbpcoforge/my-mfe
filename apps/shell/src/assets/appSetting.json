@@ -3,7 +3,6 @@
     "title": "Home",
     "description": "This is shell app",
     "iconFlag": "k-i-home",
-    "selected": true,
     "path": "",
     "layout": "KendoAppbarComponent",
     "component": "HomeComponent"
@@ -24,7 +23,7 @@
     "title": "Profile",
     "iconFlag": "k-i-user",
     "path": "profile",
-    "layout": "KendoAppbarComponent",
+    "layout": "KendoDrawerComponent",
     "component": "ProfileComponent",
     "protected": true
   },

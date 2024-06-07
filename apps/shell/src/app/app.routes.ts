@@ -25,7 +25,7 @@ export const appRoutes: Route[] = [
   {
     path: 'profile',
     loadComponent: () =>
-      import('@shell/shared-ui').then((m) => m['KendoAppbarComponent']),
+      import('@shell/shared-ui').then((m) => m['KendoDrawerComponent']),
     children: [{ path: '', component: ProfileComponent }],
     canActivate: [OktaAuthGuard],
   },
