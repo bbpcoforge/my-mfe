@@ -5,19 +5,8 @@
     "iconFlag": "k-i-home",
     "path": "",
     "layout": "KendoAppbarComponent",
-    "component": "HomeComponent"
-  },
-  {
-    "title": "Remote application",
-    "description": "Remote app with native fedration",
-    "path": "remote",
-    "layout": "KendoDrawerComponent",
-    "remote": {
-      "name": "remote1",
-      "exposes": "./remote1Module",
-      "remoteModule": "RemoteMainModule"
-    },
-    "iconFlag": "k-i-inherited"
+    "component": "HomeComponent",
+    "featureModule": "./home/home.component"
   },
   {
     "title": "Profile",
@@ -25,6 +14,7 @@
     "path": "profile",
     "layout": "KendoDrawerComponent",
     "component": "ProfileComponent",
+    "featureModule": "./profile/profile.component",
     "protected": true
   },
   {
@@ -32,10 +22,20 @@
     "path": "protected",
     "iconFlag": "k-i-lock",
     "layout": "KendoAppbarComponent",
-    "module": {
-      "path": "./protected/routes",
-      "module": "PROTECTED_FEATURE_ROUTES"
-    },
+    "component": "PROTECTED_FEATURE_ROUTES",
+    "featureModule": "./protected/routes",
     "protected": true
+  },
+  {
+    "title": "Remote application",
+    "description": "Remote app with native fedration",
+    "path": "remote",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "remote1",
+      "exposes": "./remote1Module",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-inherited"
   }
 ]

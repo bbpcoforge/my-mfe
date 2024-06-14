@@ -1,13 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterOutlet } from '@angular/router';
+import { DynamicRoutingModule } from './dynamic-routes/dynamic-routing.module';
 //import { OktaAuthStateService, OKTA_AUTH } from '@okta/okta-angular';
 //import { AuthState } from '@okta/okta-auth-js';
 //import { Observable, filter, map } from 'rxjs';
 
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink],
+  imports: [CommonModule, RouterOutlet, RouterLink, DynamicRoutingModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
