@@ -25,18 +25,19 @@ export async function getAppRoutes(): Promise<Route[]> {
         path: route.path,
         loadComponent: () =>
           import('@shell/shared-ui').then((m: any) => m[route.layout]), // Dynamic import based on layout
-        loadChildren: () =>
+        /*loadChildren: () =>
           import(route.featureModule)
             .then((m) => {
               console.log('@#@#', m);
               return m[route.component];
             })
             .catch((err) => console.error(err)), // Dynamic import based on feature module
-
+        */
         //component: () => import(`./${route.featureModule}`).then((m) => m[route.component]), // Dynamic import based on component path
       };
   });
   route.push({ path: 'login/callback', component: OktaCallbackComponent });
+
   return route;
 }
 //getAppRoutes().then((rs)=> console.log('getAppRoutes', rs));

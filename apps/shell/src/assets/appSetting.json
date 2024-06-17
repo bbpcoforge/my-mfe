@@ -37,5 +37,17 @@
       "module": "RemoteMainModule"
     },
     "iconFlag": "k-i-inherited"
+  },
+  {
+    "title": "Voya ME Remote",
+    "description": "Voya Remote app with native fedration",
+    "path": "voya-me",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "voya-me",
+      "exposes": "./voyaMEModule",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-puzzle-piece"
   }
 ]
