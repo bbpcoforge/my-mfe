@@ -5,16 +5,14 @@
     "iconFlag": "k-i-home",
     "path": "",
     "layout": "KendoAppbarComponent",
-    "component": "HomeComponent",
     "featureModule": "home/home"
   },
   {
     "title": "Profile",
     "iconFlag": "k-i-user",
     "path": "profile",
-    "layout": "KendoDrawerComponent",
-    "component": "ProfileComponent",
-    "featureModule": "profile",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "profile/profile",
     "protected": true
   },
   {
@@ -22,8 +20,7 @@
     "path": "protected",
     "iconFlag": "k-i-lock",
     "layout": "KendoAppbarComponent",
-    "component": "PROTECTED_FEATURE_ROUTES",
-    "featureModule": "./protected/routes",
+    "featureModule": "protected/routes",
     "protected": true
   },
   {

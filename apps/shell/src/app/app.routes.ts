@@ -23,11 +23,13 @@ export async function getAppRoutes(): Promise<Route[]> {
     else {
       return {
         path: route.path,
-        pathMatch: 'full',
+        pathMatch: route.path ? '' : 'full',
         loadComponent: () =>
           import('@shell/shared-ui').then((m: any) => m[route.layout]),
         loadChildren: async () => {
-          return import(`./${route.featureModule}.module.ts`).then((m) => {return m.default;});
+          return import(`./${route.featureModule}.module.ts`).then((m) => {
+            return m.default;
+          });
         },
       };
     }
