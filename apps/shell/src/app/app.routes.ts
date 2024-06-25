@@ -20,26 +20,40 @@ export async function getAppRoutes(): Promise<Route[]> {
             `${route.remoteModule.exposes}`
           ).then((m) => m[route.remoteModule.module]), // Dynamic import based on remote module
       };
-    else
+    else {
       return {
         path: route.path,
+        pathMatch: 'full',
         loadComponent: () =>
-          import('@shell/shared-ui').then((m: any) => m[route.layout]), // Dynamic import based on layout
-        /*loadChildren: () =>
-          import(route.featureModule)
-            .then((m) => {
-              console.log('@#@#', m);
-              return m[route.component];
-            })
-            .catch((err) => console.error(err)), // Dynamic import based on feature module
-        */
-        //component: () => import(`./${route.featureModule}`).then((m) => m[route.component]), // Dynamic import based on component path
+          import('@shell/shared-ui').then((m: any) => m[route.layout]),
+        loadChildren: async () => {
+          return import(`./${route.featureModule}.module.ts`).then((m) => {return m.default;});
+        },
       };
+    }
+    // {
+    //   const dynamicRoute= {
+    //     path: route.path,
+    //     loadComponent: () =>
+    //       import('@shell/shared-ui').then((m: any) => m[route.layout]), // Dynamic import based on layout
+    //     loadChildren: () =>
+    //       import(route.featureModule)
+    //         .then((m) => {
+    //           console.log('@#@#', m);
+    //           return m[route.module];
+    //         })
+    //         .catch((err) => console.error(err)), // Dynamic import based on feature module
+    //     //component: () => import(`./${route.featureModule}`).then((m) => m[route.component]), // Dynamic import based on component path
+
+    //   };
+    //   console.log(" return dynamicRoute;", dynamicRoute);
+    //   return dynamicRoute;
+    // }
   });
   route.push({ path: 'login/callback', component: OktaCallbackComponent });
-
   return route;
 }
+
 //getAppRoutes().then((rs)=> console.log('getAppRoutes', rs));
 /*
 export const appRoutes: Route[] = [

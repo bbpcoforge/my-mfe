@@ -6,7 +6,7 @@
     "path": "",
     "layout": "KendoAppbarComponent",
     "component": "HomeComponent",
-    "featureModule": "./home/home.component"
+    "featureModule": "home/home"
   },
   {
     "title": "Profile",
@@ -14,7 +14,7 @@
     "path": "profile",
     "layout": "KendoDrawerComponent",
     "component": "ProfileComponent",
-    "featureModule": "./profile/profile.component",
+    "featureModule": "profile",
     "protected": true
   },
   {
