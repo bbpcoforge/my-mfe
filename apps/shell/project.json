@@ -25,6 +25,8 @@
       "options": {
         "target": "shell:serve-original:development",
         "rebuildDelay": 0,
+        "buildLibsFromSource": true,
+        "rootDir": ".",
         "dev": true,
         "port": 0
       }
