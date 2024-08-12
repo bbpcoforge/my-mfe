@@ -57,12 +57,12 @@
       "exposes": "./ExtAngularApp",
       "module": "RemoteMainModule"
     },
-    "iconFlag": "k-i-puzzle-piece"
+    "iconFlag": "k-i-edit-tools"
   },
   {
     "title": "React External Remote App",
     "description": "External React app with shell wrapper",
-    "iconFlag": "k-i-home",
+    "iconFlag": "k-i-table-position-center",
     "path": "ext-react-app",
     "layout": "KendoAppbarComponent",
     "featureModule": "react-app-wrapper/react-app-wrapper"
