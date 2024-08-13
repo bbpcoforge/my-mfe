@@ -14,7 +14,7 @@
 
 ## Start the application
 
-✨ **[Clone the repo]** do the `npm install` and:
+✨ **Clone the repo**, do the `npm install` and:
 
 Run `npx nx serve shell` to start the development server (shell).
 
@@ -117,25 +117,39 @@ npm install @progress/kendo-theme-default --save
 
 ```
 
-const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+const {
+  withNativeFederation,
+  shareAll,
+} = require('@angular-architects/native-federation/config');
 
 module.exports = withNativeFederation({
+  name: 'remote1',
 
-  name: 'angular-mfe',
   exposes: {
-    './Component': './src/app/app.component.ts',
+    './remote1Module':
+      './apps/remote1/src/app/remote-main/remote-main.module.ts',
   },
+
   shared: {
-    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+    ...shareAll({
+      singleton: true,
+      strictVersion: true,
+      requiredVersion: 'auto',
+    }),
   },
+
   skip: [
     'rxjs/ajax',
     'rxjs/fetch',
     'rxjs/testing',
     'rxjs/webSocket',
     // Add further packages you don't need at runtime
-  ]
+  ],
+
+  // Please read our FAQ about sharing libs:
+  // https://shorturl.at/jmzH0
 });
+
 ```
 
 **mfe src/main.ts**
@@ -144,9 +158,9 @@ module.exports = withNativeFederation({
 import { initFederation } from '@angular-architects/native-federation';
 
 initFederation()
-  .catch(err => console.error(err))
-  .then(_ => import('./bootstrap'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err))
+  .then((_) => import('./bootstrap'))
+  .catch((err) => console.error(err));
 
 ```
 
@@ -154,12 +168,18 @@ initFederation()
 
 ```
 
-const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+const {
+  withNativeFederation,
+  shareAll,
+} = require('@angular-architects/native-federation/config');
 
 module.exports = withNativeFederation({
-
   shared: {
-    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+    ...shareAll({
+      singleton: true,
+      strictVersion: false,
+      requiredVersion: false, //'auto',
+    }),
   },
 
   skip: [
@@ -168,8 +188,9 @@ module.exports = withNativeFederation({
     'rxjs/testing',
     'rxjs/webSocket',
     // Add further packages you don't need at runtime
-  ]
+  ],
 });
+
 
 ```
 
@@ -178,9 +199,89 @@ module.exports = withNativeFederation({
 ```
 
 {
-  "angular-mfe": "http://localhost:4201/remoteEntry.json",
+  "remote1": "http://localhost:4201/remoteEntry.json",
+  "voya-me": "http://localhost:4202/remoteEntry.json",
+  "angular-mfe": "http://localhost:4203/remoteEntry.json",
   "react-mfe": "http://localhost:3001/remoteEntry.json"
 }
+
+```
+
+**shell src/assets/appSetting.json** this holds the route object with layout
+
+```
+
+[
+  {
+    "title": "Home",
+    "description": "This is shell app",
+    "iconFlag": "k-i-home",
+    "path": "",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "home/home"
+  },
+  {
+    "title": "Profile",
+    "iconFlag": "k-i-user",
+    "path": "profile",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "profile/profile",
+    "protected": true
+  },
+  {
+    "title": "Protected",
+    "path": "protected",
+    "iconFlag": "k-i-lock",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "protected/routes",
+    "protected": true
+  },
+  {
+    "title": "Remote application",
+    "description": "Remote app with native fedration",
+    "path": "remote",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "remote1",
+      "exposes": "./remote1Module",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-inherited"
+  },
+  {
+    "title": "Voya ME Remote",
+    "description": "Voya Remote app with native fedration",
+    "path": "voya-me",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "voya-me",
+      "exposes": "./voyaMEModule",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-puzzle-piece"
+  },
+  {
+    "title": "Angular External Remote App",
+    "description": "External repo Remote app with native fedration",
+    "path": "ext-remote",
+    "layout": "KendoAppbarComponent",
+    "remoteModule": {
+      "name": "angular-mfe",
+      "exposes": "./ExtAngularApp",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-edit-tools"
+  },
+  {
+    "title": "React External Remote App",
+    "description": "External React app with shell wrapper",
+    "iconFlag": "k-i-table-position-center",
+    "path": "ext-react-app",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "react-app-wrapper/react-app-wrapper"
+  }
+]
+
 
 ```
 
@@ -191,13 +292,138 @@ module.exports = withNativeFederation({
 import { initFederation } from '@angular-architects/native-federation';
 
 initFederation('/assets/federation.manifest.json')
-  .catch(err => console.error(err))
-  .then(_ => import('./bootstrap'))
-  .catch(err => console.error(err));
+  .catch((err) => console.error(err))
+  .then((_) => import('./bootstrap'))
+  .catch((err) => console.error(err));
+
+```
+
+**shell src/bootstrap.ts**
+
+```
+
+import { bootstrapApplication } from '@angular/platform-browser';
+import { getAppConfig } from './app/app.config';
+import { AppComponent } from './app/app.component';
+
+getAppConfig().then((config) =>
+  bootstrapApplication(AppComponent, config).catch((err) => console.error(err))
+);
+
+```
+
+**shell src/app/app.config.ts**
+
+```
+
+import {
+  APP_INITIALIZER,
+  ApplicationConfig,
+  importProvidersFrom,
+} from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {
+  provideRouter,
+  withEnabledBlockingInitialNavigation,
+} from '@angular/router';
+import { OktaAuthConfigService, OktaAuthModule } from '@okta/okta-angular';
+import { OktaAuth } from '@okta/okta-auth-js';
+import {
+  HttpBackend,
+  HttpClient,
+  provideHttpClient,
+  withInterceptors,
+} from '@angular/common/http';
+import { tap, take } from 'rxjs';
+
+import { getAppRoutes } from './app.routes';
+import { authInterceptor } from './auth.interceptor';
+
+function configInitializer(
+  httpBackend: HttpBackend,
+  configService: OktaAuthConfigService
+): () => void {
+  return () =>
+    new HttpClient(httpBackend).get('api/config.json').pipe(
+      tap((authConfig: any) =>
+        configService.setConfig({
+          oktaAuth: new OktaAuth({
+            ...authConfig,
+            redirectUri: `${window.location.origin}/login/callback`,
+          }),
+        })
+      ),
+      take(1)
+    );
+}
+export async function getAppConfig(): Promise<ApplicationConfig> {
+  const routes = await getAppRoutes();
+  return {
+    providers: [
+      importProvidersFrom([
+        OktaAuthModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+      ]),
+      provideRouter(routes, withEnabledBlockingInitialNavigation()),
+      provideHttpClient(withInterceptors([authInterceptor])),
+      {
+        provide: APP_INITIALIZER,
+        useFactory: configInitializer,
+        deps: [HttpBackend, OktaAuthConfigService],
+        multi: true,
+      },
+    ],
+  };
+}
 
 ```
 
 **shell src/app/app.routes.ts**
+
+```
+
+import { Route } from '@angular/router';
+import { loadRemoteModule } from '@angular-architects/native-federation';
+import { OktaAuthGuard, OktaCallbackComponent } from '@okta/okta-angular';
+
+export async function getAppRoutes(): Promise<Route[]> {
+  const res = await fetch('assets/appSetting.json');
+  const data = await res.json();
+  const route = data.map((route: any) => {
+    if (route.remoteModule)
+      return {
+        path: route.path,
+        loadComponent: () =>
+          import('@shell/shared-ui').then((m: any) => m[route.layout]), // Dynamic import based on layout
+        loadChildren: () =>
+          loadRemoteModule(
+            route.remoteModule.name,
+            `${route.remoteModule.exposes}`
+          ).then((m) => m[route.remoteModule.module]), // Dynamic import based on remote module
+      };
+    else {
+      return {
+        path: route.path,
+        pathMatch: route.path ? '' : 'full',
+        loadComponent: () =>
+          import('@shell/shared-ui').then((m: any) => m[route.layout]),
+        loadChildren: async () => {
+          return import(`./${route.featureModule}.module.ts`).then((m) => {
+            return m.default;
+          });
+        },
+      };
+    }
+  });
+  route.push({ path: 'login/callback', component: OktaCallbackComponent });
+  return route;
+}
+
+```
+
+**shell src/app/app.routes.ts** for simple app without dynamic layouts
 
 ```
 
