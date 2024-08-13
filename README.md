@@ -669,9 +669,13 @@ export async function buildProject(projectName) {
 ```
 
 > **[!CAUTION]**
-> Below Error will appear if **angular version mismatch** in shell and mfe (if mfe is not in Nx monorepo)
+> (if mfe is not in Nx monorepo)
+
+$${\color{red}Potential \space Error \space Due  \space to  \space Angular  \space Version  \space Mismatc \space in  \space Shell  \space and  \space MFE.}$$
 
 ```
+- Below Error will appear if **angular version mismatch** in shell and mfe (if mfe is not in Nx monorepo)
+
 ERROR Error: NG0203: inject() must be called from an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.io/errors/NG0203
     at injectInjectorOnly (_angular_core-17_3_12-dev.js:677:11)
     at Module.ɵɵinject (_angular_core-17_3_12-dev.js:687:59)
