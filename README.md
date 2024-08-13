@@ -111,6 +111,12 @@ npm install @progress/kendo-data-query --save
 npm install @progress/kendo-theme-default --save
 ```
 
+✨ **Clone the [React MFE](https://github.com/bbpcoforge/react-mfe)** to run the cross platform mfe
+
+```
+git clone https://github.com/bbpcoforge/react-mfe.git
+```
+
 ## Key Setup files and code
 
 **mfe federation.config.js**
