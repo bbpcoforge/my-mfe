@@ -5,26 +5,14 @@
     "iconFlag": "k-i-home",
     "path": "",
     "layout": "KendoAppbarComponent",
-    "component": "HomeComponent"
-  },
-  {
-    "title": "Remote application",
-    "description": "Remote app with native fedration",
-    "path": "remote",
-    "layout": "KendoDrawerComponent",
-    "remote": {
-      "name": "remote1",
-      "exposes": "./remote1Module",
-      "remoteModule": "RemoteMainModule"
-    },
-    "iconFlag": "k-i-inherited"
+    "featureModule": "home/home"
   },
   {
     "title": "Profile",
     "iconFlag": "k-i-user",
     "path": "profile",
-    "layout": "KendoDrawerComponent",
-    "component": "ProfileComponent",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "profile/profile",
     "protected": true
   },
   {
@@ -32,10 +20,51 @@
     "path": "protected",
     "iconFlag": "k-i-lock",
     "layout": "KendoAppbarComponent",
-    "module": {
-      "path": "./protected/routes",
-      "module": "PROTECTED_FEATURE_ROUTES"
-    },
+    "featureModule": "protected/routes",
     "protected": true
+  },
+  {
+    "title": "Remote application",
+    "description": "Remote app with native fedration",
+    "path": "remote",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "remote1",
+      "exposes": "./remote1Module",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-inherited"
+  },
+  {
+    "title": "Voya ME Remote",
+    "description": "Voya Remote app with native fedration",
+    "path": "voya-me",
+    "layout": "KendoDrawerComponent",
+    "remoteModule": {
+      "name": "voya-me",
+      "exposes": "./voyaMEModule",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-puzzle-piece"
+  },
+  {
+    "title": "Angular External Remote App",
+    "description": "External repo Remote app with native fedration",
+    "path": "ext-remote",
+    "layout": "KendoAppbarComponent",
+    "remoteModule": {
+      "name": "angular-mfe",
+      "exposes": "./ExtAngularApp",
+      "module": "RemoteMainModule"
+    },
+    "iconFlag": "k-i-edit-tools"
+  },
+  {
+    "title": "React External Remote App",
+    "description": "External React app with shell wrapper",
+    "iconFlag": "k-i-table-position-center",
+    "path": "ext-react-app",
+    "layout": "KendoAppbarComponent",
+    "featureModule": "react-app-wrapper/react-app-wrapper"
   }
 ]

@@ -1,9 +1,9 @@
 {
-  "name": "shell",
+  "name": "voya-me",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "app",
-  "sourceRoot": "apps/shell/src",
+  "sourceRoot": "apps/voya-me/src",
   "tags": [],
   "targets": {
     "build": {
@@ -11,10 +11,10 @@
       "options": {},
       "configurations": {
         "production": {
-          "target": "shell:esbuild:production"
+          "target": "voya-me:esbuild:production"
         },
         "development": {
-          "target": "shell:esbuild:development",
+          "target": "voya-me:esbuild:development",
           "dev": true
         }
       },
@@ -23,10 +23,8 @@
     "serve": {
       "executor": "@angular-architects/native-federation:build",
       "options": {
-        "target": "shell:serve-original:development",
+        "target": "voya-me:serve-original:development",
         "rebuildDelay": 0,
-        "buildLibsFromSource": true,
-        "rootDir": ".",
         "dev": true,
         "port": 0
       }
@@ -34,7 +32,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "shell:build"
+        "buildTarget": "voya-me:build"
       }
     },
     "lint": {
@@ -42,30 +40,36 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
-        "jestConfig": "apps/shell/jest.config.ts"
+        "jestConfig": "apps/voya-me/jest.config.ts"
       }
     },
     "esbuild": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
-        "outputPath": "dist/apps/shell",
-        "index": "apps/shell/src/index.html",
-        "browser": "apps/shell/src/main.ts",
-        "polyfills": ["zone.js", "es-module-shims"],
-        "tsConfig": "apps/shell/tsconfig.app.json",
+        "outputPath": "dist/apps/voya-me",
+        "index": "apps/voya-me/src/index.html",
+        "browser": "apps/voya-me/src/main.ts",
+        "polyfills": [
+          "zone.js",
+          "es-module-shims"
+        ],
+        "tsConfig": "apps/voya-me/tsconfig.app.json",
         "assets": [
-          "apps/shell/src/favicon.ico",
-          "apps/shell/src/assets",
-          "apps/shell/src/api"
+          "apps/voya-me/src/favicon.ico",
+          "apps/voya-me/src/assets"
         ],
         "styles": [
           {
             "input": "node_modules/@progress/kendo-theme-default/dist/all.css"
           },
-          "apps/shell/src/styles.css"
+          "apps/voya-me/src/styles.css"
         ],
         "scripts": []
       },
@@ -97,15 +101,15 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "shell:esbuild:production"
+          "buildTarget": "voya-me:esbuild:production"
         },
         "development": {
-          "buildTarget": "shell:esbuild:development"
+          "buildTarget": "voya-me:esbuild:development"
         }
       },
       "defaultConfiguration": "development",
       "options": {
-        "port": 4200
+        "port": 4202
       }
     }
   }

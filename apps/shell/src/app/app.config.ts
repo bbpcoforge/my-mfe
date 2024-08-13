@@ -19,7 +19,7 @@ import {
 } from '@angular/common/http';
 import { tap, take } from 'rxjs';
 
-import { appRoutes } from './app.routes';
+import { getAppRoutes } from './app.routes';
 import { authInterceptor } from './auth.interceptor';
 
 function configInitializer(
@@ -39,7 +39,7 @@ function configInitializer(
       take(1)
     );
 }
-
+/*
 export const appConfig: ApplicationConfig = {
   providers: [
     importProvidersFrom([
@@ -56,4 +56,24 @@ export const appConfig: ApplicationConfig = {
       multi: true,
     },
   ],
-};
+};*/
+export async function getAppConfig(): Promise<ApplicationConfig> {
+  const routes = await getAppRoutes();
+  return {
+    providers: [
+      importProvidersFrom([
+        OktaAuthModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+      ]),
+      provideRouter(routes, withEnabledBlockingInitialNavigation()),
+      provideHttpClient(withInterceptors([authInterceptor])),
+      {
+        provide: APP_INITIALIZER,
+        useFactory: configInitializer,
+        deps: [HttpBackend, OktaAuthConfigService],
+        multi: true,
+      },
+    ],
+  };
+}

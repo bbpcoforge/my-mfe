@@ -4,11 +4,18 @@ const {
 } = require('@angular-architects/native-federation/config');
 
 module.exports = withNativeFederation({
+  name: 'voya-me',
+
+  exposes: {
+    './voyaMEModule':
+      './apps/voya-me/src/app/remote-main/remote-main.module.ts',
+  },
+
   shared: {
     ...shareAll({
       singleton: true,
-      strictVersion: false,
-      requiredVersion: false, //'auto',
+      strictVersion: true,
+      requiredVersion: 'auto',
     }),
   },
 

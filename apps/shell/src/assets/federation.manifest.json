@@ -1,3 +1,6 @@
 {
-  "remote1": "http://localhost:4201/remoteEntry.json"
+  "remote1": "http://localhost:4201/remoteEntry.json",
+  "voya-me": "http://localhost:4202/remoteEntry.json",
+  "angular-mfe": "http://localhost:4203/remoteEntry.json",
+  "react-mfe": "http://localhost:3001/remoteEntry.json"
 }
