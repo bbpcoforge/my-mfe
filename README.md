@@ -22,7 +22,7 @@ Happy coding!
 
 ## Project Setup tasks
 
-To create **shell** app and setup native federation with Nx use the following syntax:
+✨ To create **shell** app and setup native federation with Nx use the following cmd:
 
 ```
 npx nx g @nx/angular:app shell --directory=apps/shell
@@ -41,7 +41,7 @@ Install Native federation on shell:
 npx nx add @angular-architects/native-federation --project shell --port 4200 --type dynamic-host
 ```
 
-To create **remote1** app and setup native federation with Nx use the following syntax:
+✨ To create **remote1** app and setup native federation with Nx use the following cmd:
 
 ```
 npx nx g @nx/angular:app remote1 --directory=apps/remote1
@@ -60,7 +60,7 @@ Install Native federation on remote1:
 npx nx add @angular-architects/native-federation --project remote1 --port 4201
 ```
 
-To create **voya-me** app and setup native federation with Nx use the following syntax:
+✨ To create **voya-me** app and setup native federation with Nx use the following cmd:
 
 ```
 npx nx g @nx/angular:app voya-me --directory=apps/voya-me
@@ -79,13 +79,13 @@ Install Native federation on voya-me:
 npx nx add @angular-architects/native-federation --project voya-me --port 4202
 ```
 
-To create **shared lib** with Nx use the following syntax:
+✨ To create **shared lib** with Nx use the following cmd:
 
 ```
 npx nx g @nx/angular:library shared-ui --directory=libs/shared/ui --standalone
 ```
 
-To Add **Kendo UI** use the following syntax:
+✨ To Add **Kendo UI** use the following cmd:
 
 ```
 npm install --save @progress/kendo-licensing
@@ -97,7 +97,7 @@ After installation **activete kendo-ui-license**, download the kendo-ui-license.
 npx kendo-ui-license activate
 ```
 
-keep adding required **Kendo UI components** use the following syntax:
+keep adding required **Kendo UI components** use the following cmd:
 
 ```
 npm install @progress/kendo-angular-grid --save
