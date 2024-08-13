@@ -6,9 +6,9 @@
 
 ✨ **This [Native federation, @angular-architects/native-federation ](https://www.npmjs.com/package/@angular-architects/native-federation?activeTab=readme) is used to create micro-frontend architecture** ✨
 
-✨ **[Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/getting-started/) is used for UI components ** ✨
+✨ **[Kendo UI for Angular](https://www.telerik.com/kendo-angular-ui/components/getting-started/) is used for UI components** ✨
 
-✨ **[Okta Angular SDK](https://github.com/okta/okta-angular) is used to add authentication and authorization ** ✨
+✨ **[Okta Angular SDK](https://github.com/okta/okta-angular) is used to add authentication and authorization** ✨
 
 ## Start the application
 
