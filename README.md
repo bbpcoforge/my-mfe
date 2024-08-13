@@ -20,6 +20,91 @@ Run `npx nx serve voya-me` to start the voya-me development server (mfe2).
 
 Happy coding!
 
+## Project Setup tasks
+
+To create **shell** app and setup native federation with Nx use the following syntax:
+
+```
+npx nx g @nx/angular:app shell --directory=apps/shell
+```
+
+Create Home Module and HomeComponent in shell app:
+
+```
+npx nx g module home-shell --project shell
+npx nx g component home --module=app-routing --directory=apps/shell/src/app
+```
+
+Install Native federation on shell:
+
+```
+npx nx add @angular-architects/native-federation --project shell --port 4200 --type dynamic-host
+```
+
+To create **remote1** app and setup native federation with Nx use the following syntax:
+
+```
+npx nx g @nx/angular:app remote1 --directory=apps/remote1
+```
+
+Create Home Module and HomeComponent in remote1 app:
+
+```
+npx nx g module remote-main --project remote1
+npx nx g component home --module=remote-main --directory=apps/remote1/src/app
+```
+
+Install Native federation on remote1:
+
+```
+npx nx add @angular-architects/native-federation --project remote1 --port 4201
+```
+
+To create **voya-me** app and setup native federation with Nx use the following syntax:
+
+```
+npx nx g @nx/angular:app voya-me --directory=apps/voya-me
+```
+
+Create Home Module and HomeComponent in voya-me app:
+
+```
+npx nx g module remote-main --project voya-me
+npx nx g component home --module=remote-main --directory=apps/voya-me/src/app
+```
+
+Install Native federation on voya-me:
+
+```
+npx nx add @angular-architects/native-federation --project voya-me --port 4202
+```
+
+To create **shared lib** with Nx use the following syntax:
+
+```
+npx nx g @nx/angular:library shared-ui --directory=libs/shared/ui --standalone
+```
+
+To Add **Kendo UI** use the following syntax:
+
+```
+npm install --save @progress/kendo-licensing
+```
+
+After installation **activete kendo-ui-license**, download the kendo-ui-license.txt have is on root and run below cmd
+
+```
+npx kendo-ui-license activate
+```
+
+keep adding required **Kendo UI components** use the following syntax:
+
+```
+npm install @progress/kendo-angular-grid --save
+npm install @progress/kendo-data-query --save
+npm install @progress/kendo-theme-default --save
+```
+
 ## Build for production
 
 Run `npx nx build shell` to build the application. The build artifacts are stored in the output directory (e.g. `dist/` or `build/`), ready to be deployed.
