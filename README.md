@@ -10,7 +10,11 @@
 
 ✨ **[Okta Angular SDK](https://github.com/okta/okta-angular) is used to add authentication and authorization** ✨
 
+✨ **Dynamic Layouts** ✨
+
 ## Start the application
+
+✨ **[Clone the repo]** do the `npm install` and:
 
 Run `npx nx serve shell` to start the development server (shell).
 
@@ -21,6 +25,8 @@ Run `npx nx serve voya-me` to start the voya-me development server (mfe2).
 Happy coding!
 
 ## Project Setup tasks
+
+**If you want to create similar setup follow the setup tasks below.**
 
 ✨ To create **shell** app and setup native federation with Nx use the following cmd:
 
@@ -103,6 +109,337 @@ keep adding required **Kendo UI components** use the following cmd:
 npm install @progress/kendo-angular-grid --save
 npm install @progress/kendo-data-query --save
 npm install @progress/kendo-theme-default --save
+```
+
+## Key Setup files and code
+
+**mfe federation.config.js**
+
+```
+
+const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+
+module.exports = withNativeFederation({
+
+  name: 'angular-mfe',
+  exposes: {
+    './Component': './src/app/app.component.ts',
+  },
+  shared: {
+    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+  },
+  skip: [
+    'rxjs/ajax',
+    'rxjs/fetch',
+    'rxjs/testing',
+    'rxjs/webSocket',
+    // Add further packages you don't need at runtime
+  ]
+});
+```
+
+**mfe src/main.ts**
+
+```
+import { initFederation } from '@angular-architects/native-federation';
+
+initFederation()
+  .catch(err => console.error(err))
+  .then(_ => import('./bootstrap'))
+  .catch(err => console.error(err));
+
+```
+
+**shell federation.config.js**
+
+```
+
+const { withNativeFederation, shareAll } = require('@angular-architects/native-federation/config');
+
+module.exports = withNativeFederation({
+
+  shared: {
+    ...shareAll({ singleton: true, strictVersion: true, requiredVersion: 'auto' }),
+  },
+
+  skip: [
+    'rxjs/ajax',
+    'rxjs/fetch',
+    'rxjs/testing',
+    'rxjs/webSocket',
+    // Add further packages you don't need at runtime
+  ]
+});
+
+```
+
+**shell src/assets/federation.manifest.json**
+
+```
+
+{
+  "angular-mfe": "http://localhost:4201/remoteEntry.json",
+  "react-mfe": "http://localhost:3001/remoteEntry.json"
+}
+
+```
+
+**shell src/main.ts**
+
+```
+
+import { initFederation } from '@angular-architects/native-federation';
+
+initFederation('/assets/federation.manifest.json')
+  .catch(err => console.error(err))
+  .then(_ => import('./bootstrap'))
+  .catch(err => console.error(err));
+
+```
+
+**shell src/app/app.routes.ts**
+
+```
+
+import { Routes } from '@angular/router';
+import { loadRemoteModule } from '@angular-architects/native-federation';
+import { ReactAppWrapperComponent } from './react-app-wrapper/react-app-wrapper.component';
+import { HomeComponent } from './home/home.component';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: HomeComponent,
+  },
+  {
+    path: 'angular-remote',
+    loadComponent: () =>
+      loadRemoteModule('angular-mfe', './Component').then(
+        (m) => m.AppComponent
+      ),
+  },
+  {
+    path: 'react-remote',
+    component: ReactAppWrapperComponent,
+  },
+];
+
+```
+
+**shell src/app/react-app-wrapper/react-app-wrapper.component.ts**
+
+```
+
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { loadRemoteModule } from '@softarc/native-federation-runtime';
+
+@Component({
+  selector: 'app-react-app-wrapper',
+  standalone: true,
+  imports: [],
+  templateUrl: './react-app-wrapper.component.html',
+  styleUrl: './react-app-wrapper.component.css',
+})
+export class ReactAppWrapperComponent implements OnInit {
+  @ViewChild('reactmfe', { static: true }) containerRef!: ElementRef;
+
+  ngOnInit() {
+    loadRemoteModule('react-mfe', './ReactApp').then((m) => {
+      console.log('remote react mfew::', m);
+      m.mount(this.containerRef.nativeElement);
+    });
+  }
+}
+
+```
+
+**shell src/app/react-app-wrapper/react-app-wrapper.component.html**
+
+```
+
+<div #reactmfe>placeholder react app...</div>
+
+```
+
+**react-mfe package.json libraries**
+
+```
+
+  "scripts": {
+    "build:remote": "tsc build/build-mfe1.ts --outDir dist && node dist/build-mfe1.js",
+    "start:remote": "live-server dist/react-mfe --port=3001 --cors",
+  },
+  "dependencies": {
+    "@softarc/native-federation-runtime": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@softarc/native-federation": "^2.0.0",
+    "@softarc/native-federation-esbuild": "^2.0.9",
+    "@types/node": "^20.5.9",
+    "concurrently": "^8.2.1",
+    "esbuild": "^0.19.2",
+    "json5": "^2.2.3",
+    "live-server": "^1.2.2",
+    "typescript": "^5.2.2"
+  }
+
+```
+
+**react-mfe federation.config.js**
+
+```
+
+const {
+  withNativeFederation,
+  shareAll,
+} = require("@softarc/native-federation/build");
+
+module.exports = withNativeFederation({
+  name: "remote-mfe",
+
+  exposes: {
+    "./ReactApp": "./src/bootstrap",
+  },
+
+  shared: {
+    ...shareAll({
+      singleton: true,
+      strictVersion: true,
+      requiredVersion: "auto",
+      includeSecondaries: false,
+    }),
+  },
+});
+
+```
+
+**react-mfe src/index.js**
+
+```
+
+import { initFederation } from "@softarc/native-federation";
+
+(async () => {
+  await initFederation();
+  await import("./bootstrap");
+})();
+
+```
+
+**react-mfe src/bootstrap.jsx**
+
+```
+
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+
+const mount = (el) => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>,
+    el
+  );
+};
+const devRoot = document.querySelector("#root");
+if (devRoot) {
+  mount(devRoot);
+}
+export { mount };
+
+```
+
+**react-mfe build/build-mfe1.ts** for esbuild setups:
+
+```
+
+import { buildProject } from "./build-common";
+
+buildProject("react-mfe");
+
+```
+
+**react-mfe build/build-common.ts**
+
+```
+
+import * as esbuild from "esbuild";
+import * as path from "path";
+import * as fs from "fs";
+import { esBuildAdapter } from "@softarc/native-federation-esbuild";
+import { federationBuilder } from "@softarc/native-federation/build";
+
+export async function buildProject(projectName) {
+  const tsConfig = "tsconfig.json";
+  const outputPath = `dist/${projectName}`;
+  /*
+   *  Step 1: Initialize Native Federation
+   */
+
+  await federationBuilder.init({
+    options: {
+      workspaceRoot: path.join(__dirname, ".."),
+      outputPath,
+      tsConfig,
+      federationConfig: `/federation.config.js`,
+      verbose: false,
+    },
+
+    /*
+     * As this core lib is tooling-agnostic, you
+     * need a simple adapter for your bundler.
+     * It's just a matter of one function.
+     */
+    adapter: esBuildAdapter,
+  });
+
+  /*
+   *  Step 2: Trigger your build process
+   *
+   *      You can use any tool for this. Here, we go with a very
+   *      simple esbuild-based build.
+   *
+   *      Just respect the externals in `federationBuilder.externals`.
+   */
+
+  fs.rmSync(outputPath, { force: true, recursive: true });
+
+  await esbuild.build({
+    entryPoints: [path.join(__dirname, "../src/index.js")],
+    external: federationBuilder.externals,
+    outdir: outputPath,
+    bundle: true,
+    platform: "browser",
+    loader: { ".js": "jsx" },
+    format: "esm",
+    mainFields: ["es2020", "browser", "module", "main"],
+    conditions: ["es2020", "es2015", "module"],
+    resolveExtensions: [".ts", ".tsx", ".mjs", ".js", ".jsx"],
+    tsconfig: tsConfig,
+    splitting: true,
+  });
+
+  fs.copyFileSync(
+    path.join(__dirname, "../public/index.html"),
+    `dist/${projectName}/index.html`
+  );
+  fs.copyFileSync(
+    path.join(__dirname, "../public/favicon.ico"),
+    `dist/${projectName}/favicon.ico`
+  );
+
+  //fs.copyFileSync(`${projectName}/styles.css`, `dist/${projectName}/styles.css`);
+
+  /*
+   *  Step 3: Let the build method do the additional tasks
+   *       for supporting Native Federation
+   */
+
+  await federationBuilder.build();
+}
 ```
 
 ## Build for production
