@@ -668,6 +668,24 @@ export async function buildProject(projectName) {
 }
 ```
 
+> **[!CAUTION]**
+> Below Error will appear if **angular version mismatch** in shell and mfe (if mfe is not in Nx monorepo)
+
+```
+ERROR Error: NG0203: inject() must be called from an injection context such as a constructor, a factory function, a field initializer, or a function used with `runInInjectionContext`. Find more at https://angular.io/errors/NG0203
+    at injectInjectorOnly (_angular_core-17_3_12-dev.js:677:11)
+    at Module.ɵɵinject (_angular_core-17_3_12-dev.js:687:59)
+    at Object.RouterModule_Factory [as useFactory] (_angular_router-17_3_12-dev.js:5354:42)
+    at Object.factory (_angular_core-17_3_8-dev.js:1979:32)
+    at _angular_core-17_3_8-dev.js:1900:35
+    at runInInjectorProfilerContext (_angular_core-17_3_8-dev.js:563:5)
+    at R3Injector.hydrate (_angular_core-17_3_8-dev.js:1899:11)
+    at R3Injector.get (_angular_core-17_3_8-dev.js:1789:23)
+    at injectInjectorOnly (_angular_core-17_3_8-dev.js:681:36)
+    at ɵɵinject (_angular_core-17_3_8-dev.js:687:59)
+
+```
+
 ## Build for production
 
 Run `npx nx build shell` to build the application. The build artifacts are stored in the output directory (e.g. `dist/` or `build/`), ready to be deployed.
